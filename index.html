@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#101619" />
+  <title>BLACK ICE — Dead of Winter</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="game-root">
+    <canvas id="game"></canvas>
+    <div class="grain"></div>
+    <div class="vignette"></div>
+    <div id="menu" class="screen visible">
+      <div class="menu-top"><span class="brand-mark">B<span>/</span>I</span><span class="status"><i></i> OPERATIONAL // 1986</span></div>
+      <div class="menu-copy">
+        <p class="eyebrow">NORTH ATLANTIC · 02:17 AM · DECEMBER 1986</p>
+        <h1>BLACK<br><em>ICE</em></h1>
+        <div class="rule"></div>
+        <p class="subtitle">DEAD OF WINTER</p>
+        <p class="brief">The relay station went dark three hours ago.<br>Something in the snow is still transmitting.</p>
+        <button id="deploy" class="primary"><span>DEPLOY</span><b>↗</b></button>
+        <div class="menu-foot"><span>OPERATION FROSTLINE</span><span>CLASSIFIED // 07-14A</span></div>
+      </div>
+      <div class="menu-side">
+        <div class="intel-card"><div class="card-head"><span>FIELD INTEL</span><span>01 / 03</span></div><div class="mini-map"><div class="map-grid"></div><span class="map-dot"></span><span class="map-ring"></span><b>G-12</b><span class="map-label">RELAY STATION</span></div><div class="intel-meta"><span>THREAT LEVEL <strong>SEVERE</strong></span><span>VISIBILITY <strong>08 M</strong></span></div></div>
+        <div class="squad-card"><div class="card-head"><span>YOUR FIRETEAM</span><span>2 / 4</span></div><div class="squad-member"><div class="avatar you">V</div><div><b>VIKTOR</b><small>ASSAULT · YOU</small></div><span class="online">●</span></div><div class="squad-member"><div class="avatar ai">K</div><div><b>KATYA</b><small>RIFLEMAN · AI</small></div><span class="online">●</span></div><div class="squad-note">CROSS-PLATFORM CO-OP <span>LIVE</span></div><div class="link-actions"><button id="host-squad">HOST SQUAD</button><button id="join-squad">JOIN</button></div><div id="join-row" class="join-row"><input id="join-code" placeholder="SQUAD CODE" maxlength="16"><button id="connect-squad">↗</button></div><div id="link-status" class="link-status">SOLO OPERATION</div></div>
+      </div>
+      <div class="control-tip"><span class="key">W A S D</span> MOVE <span class="sep">/</span> <span class="key">MOUSE</span> AIM <span class="sep">/</span> <span class="key">LMB</span> FIRE</div>
+    </div>
+    <div id="hud" class="hud hidden">
+      <div class="hud-top"><div class="mission"><span class="mission-icon">✳</span><div><small>OPERATION FROSTLINE</small><b>HOLD THE RELAY</b></div></div><div class="wave"><small>THREAT</small><b id="wave-number">WAVE <span>01</span></b><div class="wave-dots"><i class="active"></i><i></i><i></i><i></i><i></i></div></div><div class="ping"><i></i> <span id="enemy-count">00</span> HOSTILES</div></div>
+      <div class="objective"><span class="obj-mark">!</span><div><b>ELIMINATE THE INFECTED</b><small>SECURE THE PERIMETER</small></div><div class="objective-progress"><span id="progress-fill"></span></div><strong id="kill-count">0 / 6</strong></div>
+      <div class="left-hud"><div class="health-wrap"><div class="health-icon">+</div><div class="health-info"><small>VITALS</small><b id="health-value">100</b></div><div class="health-bar"><i id="health-fill"></i></div></div><div class="squad-hud"><div class="small-avatar">K</div><div><b>KATYA <i>●</i></b><small>FOLLOWING</small></div><div class="squad-health"><i></i></div></div></div>
+      <div class="weapon-hud"><div class="weapon-label"><small>PRIMARY // ASSAULT RIFLE</small><b>AK-74 <span>▰</span></b></div><div class="ammo"><strong id="ammo-current">30</strong><span>/</span><b id="ammo-reserve">180</b></div><div class="ammo-caption">7.62 × 39MM <span>•</span> FULL METAL JACKET</div><div class="reload-hint" id="reload-hint">[ R ] RELOAD</div></div>
+      <div class="crosshair"><i></i><i></i><i></i><i></i><b></b></div>
+      <div class="hitmarker" id="hitmarker">✕</div>
+      <div class="damage-flash" id="damage-flash"></div>
+      <div class="toast" id="toast"></div>
+      <div class="killfeed" id="killfeed"></div>
+      <button id="pause-button" class="pause-button" aria-label="Pause">Ⅱ</button>
+      <div id="touch-controls" class="touch-controls"><div class="touch-stick" id="touch-stick"><div class="stick-knob"></div></div><div class="touch-actions"><button id="touch-reload">↻</button><button id="touch-fire">◎</button></div></div>
+      <div class="gamepad-hint">GAMEPAD CONNECTED</div>
+    </div>
+    <div id="pause-screen" class="screen modal"><div class="modal-box"><p class="eyebrow">OPERATION FROSTLINE</p><h2>PAUSED<span>.</span></h2><p>The cold waits for no one.</p><button id="resume" class="primary"><span>RESUME OPERATION</span><b>↗</b></button><button id="quit" class="text-button">ABORT MISSION</button></div></div>
+    <div id="end-screen" class="screen modal"><div class="modal-box"><p class="eyebrow" id="end-eyebrow">MISSION REPORT</p><h2 id="end-title">KIA<span>.</span></h2><p id="end-copy">The station has fallen silent.</p><div class="report"><span>HOSTILES ELIMINATED <b id="report-kills">0</b></span><span>WAVE REACHED <b id="report-wave">01</b></span></div><button id="restart" class="primary"><span>REDEPLOY</span><b>↗</b></button><button id="back-menu" class="text-button">RETURN TO BRIEFING</button></div></div>
+    <div id="rotate-hint">ROTATE DEVICE FOR BEST EXPERIENCE</div>
+  </div>
+  <script type="module" src="game.js"></script>
+</body>
+</html>
